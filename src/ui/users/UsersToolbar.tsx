@@ -45,7 +45,7 @@ export default function UsersToolbar(props: Props) {
       <select
         value={status}
         onChange={(e) => {
-          setStatus(e.target.value as any)
+          setStatus(e.target.value as UsersQuery["status"])
           onQueryChanged()
         }}
         style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #ddd" }}
@@ -58,7 +58,7 @@ export default function UsersToolbar(props: Props) {
       <select
         value={sortKey}
         onChange={(e) => {
-          setSortKey(e.target.value as any)
+          setSortKey(e.target.value as SortKey)
           onQueryChanged()
         }}
         style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #ddd" }}

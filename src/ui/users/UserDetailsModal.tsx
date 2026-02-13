@@ -6,6 +6,13 @@ import { useUpdateUserMutation } from "../../infra/users/repo.tkq"
 
 type FormValues = { name: string; email: string; age: number; status: "active" | "blocked"; country: string }
 
+function getErrorMessage(error: unknown): string {
+  if (error && typeof error === "object" && "message" in error && typeof (error as { message: unknown }).message === "string") {
+    return (error as { message: string }).message
+  }
+  return String(error)
+}
+
 export default function UserDetailsModal(props: { user: User; listArgs: PageArgs; onClose: () => void }) {
   const { user, listArgs, onClose } = props
   const [updateUser, upd] = useUpdateUserMutation()
@@ -72,7 +79,7 @@ export default function UserDetailsModal(props: { user: User; listArgs: PageArgs
 
           {upd.isError && (
             <div style={{ padding: 10, borderRadius: 10, border: "1px solid #f3c", background: "#fff5fb" }}>
-              <b>Save failed:</b> {String((upd.error as any)?.message ?? upd.error)}
+              <b>Save failed:</b> {getErrorMessage(upd.error)}
               <div style={{ opacity: 0.75, marginTop: 4 }}>Optimistic update was rolled back automatically.</div>
             </div>
           )}
